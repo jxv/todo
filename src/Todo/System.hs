@@ -23,3 +23,4 @@ instance Commander System where
 
 instance Console System where
   getLine = error "getLine"
+  putStrLn = error "putStrLn"

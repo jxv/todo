@@ -7,7 +7,7 @@ import Control.Monad.TestFixture.TH
 import Test.Hspec
 
 import Todo.Types
-import Todo.HasCommandImpl (getCommand)
+import Todo.HasCommandImpl (getCommand, getCommandPrompt)
 import Todo.Parts (Console)
 
 mkFixture "Fixture" [''Console]
@@ -27,9 +27,12 @@ spec = do
         { _getLine = do
             log "getLine"
             return "1"
+        , _putStrLn = \msg -> do
+            log "putStrLn"
+            lift $ msg `shouldBe` getCommandPrompt
         }
 
-      calls `shouldBe` ["getLine"]
+      calls `shouldBe` ["putStrLn", "getLine"]
       actual `shouldBe` Append
 
     it "should get Append on second try" $ do
@@ -39,8 +42,11 @@ spec = do
             log "getLine"
             input <- pop
             return input
+        , _putStrLn = \msg -> do
+            log "putStrLn"
+            lift $ msg `shouldBe` getCommandPrompt
         }
         ["BAD","1"]
 
-      calls `shouldBe` ["getLine", "getLine"]
+      calls `shouldBe` ["putStrLn", "getLine", "putStrLn", "getLine"]
       actual `shouldBe` Append

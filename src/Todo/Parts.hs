@@ -14,3 +14,4 @@ class Monad m => Commander m where
 
 class Monad m => Console m where
   getLine :: m String
+  putStrLn :: String -> m ()
