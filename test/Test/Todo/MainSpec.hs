@@ -8,9 +8,9 @@ import Test.Hspec
 
 import Todo.Types
 import Todo.Main (main)
-import Todo.Parts ()
+import Todo.Parts (HasCommand)
 
---  mkFixture "Fixture" []
+mkFixture "Fixture" [''HasCommand]
 
 spec :: Spec
 spec = do
