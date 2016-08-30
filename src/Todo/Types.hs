@@ -3,3 +3,5 @@ module Todo.Types
   ) where
 
 data Command
+  = Append
+  deriving (Show, Eq)
