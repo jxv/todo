@@ -4,6 +4,8 @@ module Todo.System
   ) where
 
 import Control.Monad.IO.Class (MonadIO)
+
+import qualified Todo.HasCommandImpl as HasCommand
 import Todo.Types
 import Todo.Parts
 
@@ -14,7 +16,10 @@ runIO :: System a -> IO a
 runIO system = unSystem system
 
 instance HasCommand System where
-  getCommand = error "getCommand"
+  getCommand = HasCommand.getCommand
 
 instance Commander System where
   appendTask = error "appendTask"
+
+instance Console System where
+  getLine = error "getLine"

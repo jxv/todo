@@ -18,6 +18,7 @@ library
                        Todo.System
                        Todo.Parts
                        Todo.Types
+                       Todo.HasCommandImpl
   build-depends:       base >= 4.7 && < 5
                      , transformers
                      , mtl
