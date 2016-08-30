@@ -12,6 +12,12 @@ import Todo.Parts (Console)
 
 mkFixture "Fixture" [''Console]
 
+pop :: Monad m => TestFixtureT Fixture [a] [b] m b
+pop = do
+  x:xs <- get
+  put xs
+  return x
+
 spec :: Spec
 spec = do
   describe "getCommand" $ do
@@ -24,4 +30,17 @@ spec = do
         }
 
       calls `shouldBe` ["getLine"]
+      actual `shouldBe` Append
+
+    it "should get Append on second try" $ do
+
+      (actual, _, calls) <- runTestFixtureT getCommand def
+        { _getLine = do
+            log "getLine"
+            input <- pop
+            return input
+        }
+        ["BAD","1"]
+
+      calls `shouldBe` ["getLine", "getLine"]
       actual `shouldBe` Append

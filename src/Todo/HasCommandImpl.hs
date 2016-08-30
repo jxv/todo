@@ -11,5 +11,7 @@ import Todo.Parts
 
 getCommand :: Console m => m Command
 getCommand = do
-  _ <- getLine
-  return Append
+  input <- getLine
+  case input of
+    "1" -> return Append
+    _ -> getCommand
