@@ -6,6 +6,7 @@ module Todo.System
 import Control.Monad.IO.Class (MonadIO)
 
 import qualified Todo.HasCommandImpl as HasCommand
+import qualified Todo.ConsoleImpl as Console
 import Todo.Types
 import Todo.Parts
 
@@ -22,5 +23,5 @@ instance Commander System where
   appendTask = error "appendTask"
 
 instance Console System where
-  getLine = error "getLine"
-  putStrLn = error "putStrLn"
+  getLine = Console.getLine
+  putStrLn = Console.putStrLn
