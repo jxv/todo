@@ -8,12 +8,19 @@ import Test.Hspec
 
 import Todo.Types
 import Todo.Main (main)
-import Todo.Parts ()
+import Todo.Parts (HasCommand, Commander)
 
---  mkFixture "Fixture" []
+mkFixture "Fixture" [''HasCommand, ''Commander]
 
 spec :: Spec
 spec = do
   describe "main" $ do
-    it "should be ..." $ do
-      () `shouldBe` ()
+    it "should appendTask" $ do
+      calls <- logTestFixtureT main def
+        { _getCommand = do
+            log "getCommand"
+            return Append
+        , _appendTask = do
+            log "appendTask"
+        }
+      calls `shouldBe` ["getCommand", "appendTask"]
